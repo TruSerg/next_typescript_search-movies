@@ -32,6 +32,11 @@ export interface MoviesServerResponse {
 }
 
 export interface MoviesSearchParams {
-  currentPage: number;
+  currentPage?: number;
+  sortValue?: string | null;
   moviesGenreValue?: string;
+  releaseYear?: number;
+  from?: string | null;
+  to?: string | null;
+  moviesFilterValue?: string;
 }

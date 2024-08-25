@@ -14,7 +14,7 @@ const CustomForm: FC<CustomFormProps> = ({
   className,
 }) => {
   return (
-    <form onSubmit={handleSubmit} id={id} className={className}>
+    <form  onSubmit={handleSubmit} id={id} className={className}>
       {children}
     </form>
   );

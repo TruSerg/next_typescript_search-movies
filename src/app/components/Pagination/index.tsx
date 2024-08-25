@@ -4,7 +4,7 @@ import { Pagination } from "@mantine/core";
 interface PaginationProps {
   className: string;
   currentPage: number;
-  pageCount: number;
+  pageCount: number | undefined;
   handlePageChange: (value: number) => void;
 }
 
@@ -14,6 +14,8 @@ const BasicPagination: FC<PaginationProps> = ({
   pageCount,
   handlePageChange,
 }) => {
+  if (!pageCount) return null;
+
   return (
     <Pagination
       className={className}

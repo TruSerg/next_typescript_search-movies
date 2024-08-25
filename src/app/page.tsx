@@ -1,5 +1,5 @@
 "use client";
-import { FormEvent, useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Box, rem } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";
 
@@ -10,19 +10,35 @@ import {
   useLazySearchMoviesQuery,
 } from "./store/movies.api";
 
-import { usePagination, useSelect } from "./hooks";
+import { useInput, usePagination, useReplaceGenreId, useSelect } from "./hooks";
 
 import CustomForm from "./components/CustomForm";
 import UnstyleButton from "./components/Buttons/UnstyleButton";
 import Heading from "./components/Heading";
 import CustomSelect from "./components/CustomSelect";
-import CustomCard from "./components/Card";
+import CustomCard from "./components/Cards/Card";
 import CustomLoader from "./components/Loader";
 import BasicPagination from "./components/Pagination";
+import YearPickerComponent from "./components/Inputs/YearPickerInput";
+import { replaceGenreMovieValue } from "./utils/replaceGenreMovieValue";
 
 const MoviesPage = () => {
-  const { moviesGenreValue, handleMovieValueChange } = useSelect();
+  const [isFirstRequest, setIsFirstRequest] = useState(false);
+
+  const {
+    moviesGenreValue,
+    rateFrom,
+    rateTo,
+    sortValue,
+    handleMovieValueChange,
+    handleRateFromChange,
+    handleRateToChange,
+    handleSortValueChange,
+  } = useSelect();
   const { currentPage, handlePageChange } = usePagination();
+  const { yearPickerValue, handleYearPickerValue } = useInput();
+
+  console.log("sortValue: ", sortValue);
 
   const {
     data: genres,
@@ -46,39 +62,62 @@ const MoviesPage = () => {
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    handlePageChange(1);
-
-    fetchSearchMovies({ currentPage, moviesGenreValue });
+    if (moviesGenreValue) {
+      handlePageChange(1);
+      fetchSearchMovies({
+        currentPage,
+        sortValue,
+        moviesGenreValue,
+        releaseYear: yearPickerValue,
+        from: rateFrom,
+        to: rateTo,
+      });
+      setIsFirstRequest(true);
+    }
   };
 
   console.log(movies ? movies.results : null);
 
   console.log(movies);
 
-  const totalPages = movies?.total_pages;
-
   useEffect(() => {
-    if (currentPage > 1) {
-      fetchSearchMovies({ currentPage, moviesGenreValue });
+    if (isFirstRequest) {
+      fetchSearchMovies({
+        currentPage,
+        sortValue,
+        moviesGenreValue,
+        releaseYear: yearPickerValue,
+        from: rateFrom,
+        to: rateTo,
+      });
     }
-  }, [currentPage]);
+  }, [isFirstRequest, currentPage]);
+
+  const totalPages = movies?.total_pages;
 
   return (
     <main className="m-auto w-full max-w-[1010px] pb-20 pl-[15px] pr-[15px] pt-10">
-      <Heading text="Movies" className="mb-10 text-[32px] font-bold" />
+      <Heading
+        text={
+          isFirstRequest
+            ? `${replaceGenreMovieValue(genres, moviesGenreValue)} movies`
+            : "Movies"
+        }
+        className="mb-10 text-[32px] font-bold"
+      />
       <CustomForm
-        className="mb-6 grid grid-cols-[600px_1fr_80px] gap-4"
+        className="mb-6 grid grid-cols-[600px_1fr_80px] grid-rows-2 gap-4"
         handleSubmit={handleFormSubmit}
         id="searchMoviesForm"
       >
         <Box className="grid grid-cols-2 gap-4">
           <CustomSelect
-            handleChange={(value) =>
-              handleMovieValueChange(value, genres as IGenre[])
-            }
             data={genres ? genres.map(({ name }) => name) : []}
             label="Genres"
             placeholder="Select genre"
+            handleChange={(value) =>
+              handleMovieValueChange(value, genres as IGenre[])
+            }
           >
             {isGenresLoading ? (
               <CustomLoader size={20} />
@@ -86,15 +125,29 @@ const MoviesPage = () => {
               <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
             )}
           </CustomSelect>
-          <CustomSelect label="Release year" placeholder="Select release year">
+
+          <YearPickerComponent
+            label="Release year"
+            placeholder="Select release year"
+            handleChange={(value) => handleYearPickerValue(value)}
+          >
             <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
-          </CustomSelect>
+          </YearPickerComponent>
         </Box>
 
         <Box className="grid grid-cols-2 items-end gap-2">
-          <CustomSelect label="Ratings" placeholder="From" />
+          <CustomSelect
+            data={["1", "2", "3", " 4", "5", "6", "7", "8", "9", "10"]}
+            label="Ratings"
+            placeholder="From"
+            handleChange={(value) => handleRateFromChange(value)}
+          />
 
-          <CustomSelect placeholder="To" />
+          <CustomSelect
+            data={["1", "2", "3", " 4", "5", "6", "7", "8", "9", "10"]}
+            placeholder="To"
+            handleChange={(value) => handleRateToChange(value)}
+          />
         </Box>
 
         <UnstyleButton
@@ -102,16 +155,29 @@ const MoviesPage = () => {
           className="flex items-end justify-end pb-[13px] text-sm font-medium text-gray-600 transition-colors hover:text-purple-500"
           text="Reset&nbsp;filters"
         />
+
+        <Box className="col-start-2 col-end-4">
+          <CustomSelect
+            className="col-start-3"
+            data={[
+              "Most popular",
+              "Less popular",
+              "Higher rating",
+              "Lower rating",
+              "Late date",
+              "Early date",
+              "Title (A-Z)",
+              "Title (Z-A)",
+            ]}
+            label="Sort by"
+            placeholder="Most popular"
+            handleChange={(value) => handleSortValueChange(value)}
+          >
+            <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
+          </CustomSelect>
+        </Box>
       </CustomForm>
-      <Box className="col-start-2 mb-6 grid grid-cols-[1fr_1fr_295px]">
-        <CustomSelect
-          className="col-start-3"
-          label="Sort by"
-          placeholder="Most popular"
-        >
-          <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
-        </CustomSelect>
-      </Box>
+
       <Box className="relative mb-6 min-h-screen">
         {isMoviesLoading || isMoviesFetching ? (
           <CustomLoader
@@ -148,14 +214,13 @@ const MoviesPage = () => {
           </>
         )}
       </Box>
-      {totalPages ? (
-        <BasicPagination
-          className="flex justify-end"
-          currentPage={currentPage}
-          pageCount={totalPages as number}
-          handlePageChange={handlePageChange}
-        />
-      ) : null}
+
+      <BasicPagination
+        className="flex justify-end"
+        currentPage={currentPage}
+        pageCount={totalPages}
+        handlePageChange={handlePageChange}
+      />
     </main>
   );
 };

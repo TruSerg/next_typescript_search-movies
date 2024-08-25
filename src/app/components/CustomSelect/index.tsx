@@ -4,7 +4,7 @@ import { Select } from "@mantine/core";
 interface SelectProps {
   className?: string;
   children?: ReactNode;
-  label: string;
+  label?: string;
   data: string[];
   placeholder: string;
   handleChange: (value: string | null) => void;
@@ -21,8 +21,8 @@ const CustomSelect: FC<SelectProps> = ({
   return (
     <Select
       className={className}
-      size={"md"}
-      radius={"md"}
+      size="md"
+      radius="md"
       rightSection={children}
       label={label}
       data={data}

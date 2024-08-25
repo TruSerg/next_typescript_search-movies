@@ -1,6 +1,7 @@
 import { Box, MantineProvider } from "@mantine/core";
 import type { Metadata } from "next";
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 
 import { Inter } from "next/font/google";
 

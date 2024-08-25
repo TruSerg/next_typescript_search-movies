@@ -8,15 +8,16 @@ import {
 
 import { usePagination } from "../hooks";
 
-import Heading from "../components/Heading";
-import CustomLoader from "../components/Loader";
-import CustomCard from "../components/Card";
 import BasicPagination from "../components/Pagination";
+import CustomCard from "../components/Cards/Card";
+import CustomLoader from "../components/Loader";
+import Heading from "../components/Heading";
 
 const TrendingMoviesPage = () => {
   const { currentPage, handlePageChange } = usePagination();
 
   const {
+    data: genres,
     isLoading: isGenresLoading,
     isFetching: isGenresFetching,
     isError: isGenresError,
@@ -27,17 +28,17 @@ const TrendingMoviesPage = () => {
     data: trendingMovies,
     isLoading: isTrendingMoviesLoading,
     isFetching: isTrendingMoviesFetching,
-    isError: isTrendingMoviesError,
-    error: trendingMoviesError,
+    isError: isMoviesError,
+    error: moviesError,
   } = useTrendingMoviesQuery({ currentPage });
 
-  console.log(trendingMovies);
-
+  const trendingMoviesList = trendingMovies?.results;
   const totalPages = trendingMovies?.total_pages;
 
   return (
     <main className="m-auto w-full max-w-[1010px] pb-20 pl-[15px] pr-[15px] pt-10">
       <Heading text="Trending movies" className="mb-10 text-[32px] font-bold" />
+
       <Box className="relative mb-6 min-h-screen">
         {isTrendingMoviesLoading ||
         isTrendingMoviesFetching ||
@@ -49,7 +50,7 @@ const TrendingMoviesPage = () => {
         ) : (
           <>
             <ul className="grid grid-cols-2 gap-4">
-              {trendingMovies?.results.map(
+              {trendingMoviesList?.map(
                 ({
                   id,
                   poster_path,
@@ -80,7 +81,7 @@ const TrendingMoviesPage = () => {
         <BasicPagination
           className="flex justify-end"
           currentPage={currentPage}
-          pageCount={totalPages as number}
+          pageCount={totalPages}
           handlePageChange={handlePageChange}
         />
       ) : null}

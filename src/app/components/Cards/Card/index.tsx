@@ -9,10 +9,11 @@ import { useGetMovieGenresQuery } from "@/app/store/movies.api";
 import { IMAGE_URL } from "@/app/const";
 import { useReplaceGenreId } from "@/app/hooks";
 
-import Heading from "../Heading";
-import DateComponent from "../DateComponent";
-import RateComponent from "../RateComponent";
-import NoImageComponent from "../NoImageComponent";
+import Heading from "../../Heading";
+import DateComponent from "../../DateComponent";
+import RateComponent from "../../RateComponent";
+import PopularityComponent from "../../PopularityComponent";
+import NoImageSmall from "../../NoImage/NoImageSmall";
 
 interface customCardProps {
   image: string;
@@ -50,7 +51,7 @@ const CustomCard: FC<customCardProps> = ({
               alt={title}
             />
           ) : (
-            <NoImageComponent />
+            <NoImageSmall />
           )}
 
           <Box className="word-wrap-[break-word] flex flex-col">
@@ -60,18 +61,18 @@ const CustomCard: FC<customCardProps> = ({
               className="mb-2 text-xl font-semibold text-purple-500"
             />
 
-            {date ? (
-              <DateComponent
-                c="dimmed"
-                className="mb-2 text-base"
-                date={date}
-                dateFormat={"YYYY"}
-              />
-            ) : null}
+            <DateComponent
+              c="dimmed"
+              className="mb-2 text-base"
+              date={date}
+              dateFormat="YYYY"
+            />
 
-            {rate > 0 ? (
-              <RateComponent rate={rate} popularity={popularity} />
-            ) : null}
+            <Box className="mb-2 flex items-center gap-2">
+              <RateComponent rate={rate} />
+
+              <PopularityComponent rate={rate} popularity={popularity} />
+            </Box>
 
             <Box className="mt-auto flex flex-wrap gap-x-2">
               <Text c="dimmed" className="text-base">

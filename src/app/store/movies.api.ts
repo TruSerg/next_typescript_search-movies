@@ -37,14 +37,23 @@ export const moviesApi = createApi({
       transformResponse: (response: ServerResponse) => response?.genres,
     }),
     searchMovies: builder.query<MoviesServerResponse, MoviesSearchParams>({
-      query: ({ currentPage, moviesGenreValue }) =>
-        `discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=popularity.desc&with_genres=${moviesGenreValue}'`,
+      query: ({ currentPage, sortValue, moviesGenreValue, releaseYear, from, to }) =>
+        `discover/movie?include_adult=false&include_video=false&language=en-US&page=${currentPage}&sort_by=${sortValue}&primary_release_year=${releaseYear}&vote_average.gte=${from}&vote_average.lte=${to}&with_genres=${moviesGenreValue}'`,
     }),
     trendingMovies: builder.query<MoviesServerResponse, MoviesSearchParams>({
       query: ({ currentPage }) =>
         `trending/movie/day?language=en-US&page=${currentPage}`,
     }),
+    getMoviesByFilter: builder.query<MoviesServerResponse, MoviesSearchParams>({
+      query: ({ moviesFilterValue, currentPage }) =>
+        `movie/${moviesFilterValue}?language=en-US&page=${currentPage}`,
+    }),
   }),
 });
 
-export const { useGetMovieGenresQuery, useLazySearchMoviesQuery, useTrendingMoviesQuery } = moviesApi;
+export const {
+  useGetMovieGenresQuery,
+  useLazySearchMoviesQuery,
+  useTrendingMoviesQuery,
+  useLazyGetMoviesByFilterQuery,
+} = moviesApi;

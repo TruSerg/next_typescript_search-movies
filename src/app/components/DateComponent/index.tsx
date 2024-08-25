@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Text } from "@mantine/core";
-import moment from "moment";
+import dayjs from "dayjs";
 
 interface DateComponentProps {
   c: string;
@@ -15,9 +15,11 @@ const DateComponent: FC<DateComponentProps> = ({
   date,
   dateFormat,
 }) => {
+  if (!date) return null;
+
   return (
     <Text c={c} className={className}>
-      {moment(date).format(dateFormat)}
+      {dayjs(date).format(dateFormat)}
     </Text>
   );
 };
