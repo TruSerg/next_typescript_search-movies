@@ -9,25 +9,32 @@ import RateComponent from "../../RateComponent";
 import NoImageBig from "../../NoImage/NoImageBig";
 
 interface MoviesFilterCardProps {
+  className?: string;
+  classNameText?: string;
   image: string;
   title: string;
-  date: string;
+  date?: string;
   rate: number;
+  width: number;
+  height: number;
 }
 
 const MoviesFilterCard: FC<MoviesFilterCardProps> = ({
+  className,
+  classNameText,
   image,
   title,
   date,
   rate,
+  width,
+  height,
 }) => (
-  <Card radius="md" shadow="sm" padding="none">
+  <Card className={className} radius="md" shadow="sm" padding="none">
     {image ? (
       <Image
-        className="h-[300px] w-full"
         src={`${IMAGE_URL}${image}`}
-        width={200}
-        height={300}
+        width={width}
+        height={height}
         alt={title}
       />
     ) : (
@@ -35,23 +42,22 @@ const MoviesFilterCard: FC<MoviesFilterCardProps> = ({
     )}
 
     <Box className="p-2">
-      <RateComponent rate={rate} />
+      <Box className="mb-2">
+        <RateComponent rate={rate} />
+      </Box>
 
-      <Text
-        fw={600}
-        size="md"
-        mt="sm"
-        className="font-semibold text-purple-500"
-      >
+      <Text fw={600} className={classNameText}>
         {title}
       </Text>
 
-      <DateComponent
-        c="dimmed"
-        className=""
-        date={date}
-        dateFormat={"D MMM, YYYY"}
-      />
+      {date ? (
+        <DateComponent
+          c="dimmed"
+          className="text-base sm:mb-1 sm:text-sm"
+          date={date}
+          dateFormat={"D MMM, YYYY"}
+        />
+      ) : null}
     </Box>
   </Card>
 );

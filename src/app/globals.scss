@@ -2,4 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
+@layer base {
+  .container {
+    @apply max-w-[1535px] sm:max-w-[639px] md:max-w-[767px] lg:max-w-[1023px] xl:max-w-[1279px];
+  }
+}

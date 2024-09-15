@@ -1,26 +1,25 @@
 "use client";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, rem } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";
 
-import { IGenre } from "./interfaces/searchMoviesDataInterfaces";
+import { movieFromToRateList, movieSortList } from "./const";
 
 import {
   useGetMovieGenresQuery,
   useLazySearchMoviesQuery,
 } from "./store/movies.api";
 
-import { useInput, usePagination, useReplaceGenreId, useSelect } from "./hooks";
+import { useInput, usePagination, useSelect } from "./hooks";
 
 import CustomForm from "./components/CustomForm";
-import UnstyleButton from "./components/Buttons/UnstyleButton";
 import Heading from "./components/Heading";
-import CustomSelect from "./components/CustomSelect";
-import CustomCard from "./components/Cards/Card";
+import CustomSelect from "./components/Selects/CustomSelect";
+import CustomCard from "./components/Cards/MoviesCard";
 import CustomLoader from "./components/Loader";
 import BasicPagination from "./components/Pagination";
 import YearPickerComponent from "./components/Inputs/YearPickerInput";
-import { replaceGenreMovieValue } from "./utils/replaceGenreMovieValue";
+import StartSearchingComponent from "./components/StartSearchingComponent";
 
 const MoviesPage = () => {
   const [isFirstRequest, setIsFirstRequest] = useState(false);
@@ -37,7 +36,10 @@ const MoviesPage = () => {
   } = useSelect();
   const { currentPage, handlePageChange } = usePagination();
   const { yearPickerValue, handleYearPickerValue } = useInput();
-
+  console.log("yearPickerValue: ", yearPickerValue);
+  console.log("rateFrom: ", rateFrom);
+  console.log("moviesGenreValue: ", moviesGenreValue);
+  console.log("rateTo: ", rateTo);
   console.log("sortValue: ", sortValue);
 
   const {
@@ -59,7 +61,7 @@ const MoviesPage = () => {
     },
   ] = useLazySearchMoviesQuery();
 
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (e: globalThis.KeyboardEvent) => {
     e.preventDefault();
 
     if (moviesGenreValue) {
@@ -91,94 +93,92 @@ const MoviesPage = () => {
         to: rateTo,
       });
     }
-  }, [isFirstRequest, currentPage]);
+  }, [isFirstRequest, currentPage, sortValue]);
 
+  const moviesList = movies?.results;
   const totalPages = movies?.total_pages;
 
+  console.log(moviesList?.length);
+
   return (
-    <main className="m-auto w-full max-w-[1010px] pb-20 pl-[15px] pr-[15px] pt-10">
+    <main className="m-auto w-full max-w-[1010px] pb-20 pl-[15px] pr-[15px] pt-10 xl:m-0 xl:max-w-full xl:pb-10 xl:pt-5 sm:pt-3">
       <Heading
         text={
-          isFirstRequest
-            ? `${replaceGenreMovieValue(genres, moviesGenreValue)} movies`
-            : "Movies"
+          // isSubmit
+          //   ? `${replaceGenreMovieValue(genres, moviesGenreValue)} movies`
+          //   :
+
+          "Movies"
         }
-        className="mb-10 text-[32px] font-bold"
+        className="mb-10 text-[32px] font-bold xl:mb-5 lg:text-[28px] sm:text-[24px] sm:mb-3"
       />
       <CustomForm
-        className="mb-6 grid grid-cols-[600px_1fr_80px] grid-rows-2 gap-4"
+        className="mb-6 sm:mb-3 grid grid-cols-[2fr_1fr] gap-4 lg:grid-cols-1 sm:gap-2"
         handleSubmit={handleFormSubmit}
         id="searchMoviesForm"
       >
-        <Box className="grid grid-cols-2 gap-4">
+        <Box className="grid grid-cols-2 gap-4 md:gap-2 sm:grid-cols-1">
           <CustomSelect
-            data={genres ? genres.map(({ name }) => name) : []}
+            clearable={true}
+            data={genres?.map(({ name }) => name)}
             label="Genres"
             placeholder="Select genre"
-            handleChange={(value) =>
-              handleMovieValueChange(value, genres as IGenre[])
+            handleChange={(value) => handleMovieValueChange(value, genres)}
+            rightSection={
+              isGenresLoading ? (
+                <CustomLoader size={20} />
+              ) : (
+                <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
+              )
             }
-          >
-            {isGenresLoading ? (
-              <CustomLoader size={20} />
-            ) : (
-              <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
-            )}
-          </CustomSelect>
+          />
 
           <YearPickerComponent
             label="Release year"
             placeholder="Select release year"
+            rightSection={
+              !yearPickerValue ? (
+                <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
+              ) : null
+            }
             handleChange={(value) => handleYearPickerValue(value)}
-          >
-            <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
-          </YearPickerComponent>
+          />
         </Box>
 
-        <Box className="grid grid-cols-2 items-end gap-2">
+        <Box className="grid grid-cols-2 items-end gap-2 lg:grid-cols-4 lg:gap-4 md:grid-cols-3 md:gap-2 sm:grid-cols-2">
           <CustomSelect
-            data={["1", "2", "3", " 4", "5", "6", "7", "8", "9", "10"]}
+            clearable={true}
+            data={movieFromToRateList}
             label="Ratings"
             placeholder="From"
             handleChange={(value) => handleRateFromChange(value)}
           />
 
           <CustomSelect
-            data={["1", "2", "3", " 4", "5", "6", "7", "8", "9", "10"]}
+            clearable={true}
+            data={movieFromToRateList}
             placeholder="To"
             handleChange={(value) => handleRateToChange(value)}
           />
         </Box>
-
-        <UnstyleButton
-          handleClick={handleFormSubmit}
-          className="flex items-end justify-end pb-[13px] text-sm font-medium text-gray-600 transition-colors hover:text-purple-500"
-          text="Reset&nbsp;filters"
-        />
-
-        <Box className="col-start-2 col-end-4">
-          <CustomSelect
-            className="col-start-3"
-            data={[
-              "Most popular",
-              "Less popular",
-              "Higher rating",
-              "Lower rating",
-              "Late date",
-              "Early date",
-              "Title (A-Z)",
-              "Title (Z-A)",
-            ]}
-            label="Sort by"
-            placeholder="Most popular"
-            handleChange={(value) => handleSortValueChange(value)}
-          >
-            <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
-          </CustomSelect>
-        </Box>
       </CustomForm>
 
-      <Box className="relative mb-6 min-h-screen">
+      {isFirstRequest && (
+        <Box className="mb-6 grid grid-cols-3 gap-2 lg:grid-cols-2 sm:grid-cols-1">
+          <CustomSelect
+            className="col-start-3 lg:col-start-2"
+            data={movieSortList}
+            label="Sort by"
+            placeholder="Select sort value"
+            handleChange={(value) => handleSortValueChange(value)}
+            rightSection={
+              <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
+            }
+          />
+        </Box>
+      )}
+
+      <Box className="relative mb-6 min-h-[60vh]">
         {isMoviesLoading || isMoviesFetching ? (
           <CustomLoader
             className="absolute left-1/2 top-1/2 mr-[-50%] translate-x-[-50%] translate-y-[-50%]"
@@ -186,31 +186,35 @@ const MoviesPage = () => {
           />
         ) : (
           <>
-            <ul className="grid grid-cols-2 gap-4">
-              {movies?.results.map(
-                ({
-                  id,
-                  poster_path,
-                  title,
-                  vote_average,
-                  release_date,
-                  popularity,
-                  genre_ids,
-                }) => {
-                  return (
-                    <CustomCard
-                      key={id}
-                      image={poster_path}
-                      title={title}
-                      rate={vote_average}
-                      date={release_date}
-                      popularity={popularity}
-                      list={genre_ids}
-                    />
-                  );
-                },
-              )}
-            </ul>
+            {!moviesList ? (
+              <StartSearchingComponent />
+            ) : (
+              <ul className="grid grid-cols-2 gap-4 lg:grid-cols-3 md:grid-cols-2 sm:gap-2">
+                {moviesList?.map(
+                  ({
+                    id,
+                    poster_path,
+                    title,
+                    vote_average,
+                    release_date,
+                    popularity,
+                    genre_ids,
+                  }) => {
+                    return (
+                      <CustomCard
+                        key={id}
+                        image={poster_path}
+                        title={title}
+                        rate={vote_average}
+                        date={release_date}
+                        popularity={popularity}
+                        list={genre_ids}
+                      />
+                    );
+                  },
+                )}
+              </ul>
+            )}
           </>
         )}
       </Box>

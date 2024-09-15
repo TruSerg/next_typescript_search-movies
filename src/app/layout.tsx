@@ -30,7 +30,7 @@ export default function RootLayout({
         <Providers>
           <MantineProvider>
             <Container>
-              <Box className="flex bg-gray-100">
+              <Box className="xl:flex-col flex bg-gray-100">
                 <SideBar />
 
                 {children}

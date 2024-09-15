@@ -7,7 +7,9 @@ interface ContainerProps {
 
 const Container: FC<ContainerProps> = ({ children }) => {
   return (
-    <Box className="m-auto max-w-[1470px] pl-[15px] pr-[15px]">{children}</Box>
+    <Box className="m-auto max-w-[1470px] pl-[15px] pr-[15px] xl:pl-0 xl:pr-0">
+      {children}
+    </Box>
   );
 };
 

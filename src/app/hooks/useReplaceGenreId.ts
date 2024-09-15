@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 import { IGenre } from "../interfaces/searchMoviesDataInterfaces";

@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import dayjs from "dayjs";
 import { DateValue } from "@mantine/dates";
 
 const useInput = () => {
-  const [yearPickerValue, setYearPickerValue] = useState<number>(0);
+  const [yearPickerValue, setYearPickerValue] = useState<number>();
 
   const handleYearPickerValue = (value: DateValue) => {
     const year = dayjs(value).year();

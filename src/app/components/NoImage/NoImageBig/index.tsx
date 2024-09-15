@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Box } from "@mantine/core";
 
 import NoImage from "../../../static/img/no-image-big.jpg";
 

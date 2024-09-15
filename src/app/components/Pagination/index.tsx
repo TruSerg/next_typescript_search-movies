@@ -18,12 +18,13 @@ const BasicPagination: FC<PaginationProps> = ({
 
   return (
     <Pagination
+      hideWithOnePage
+      color="#9854f6"
+      size="xs"
       className={className}
       total={pageCount}
       value={currentPage}
       onChange={(value) => handlePageChange(value)}
-      hideWithOnePage
-      color="#9854f6"
     />
   );
 };

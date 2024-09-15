@@ -20,7 +20,10 @@ const useSelect = () => {
     setRateTo(value);
   };
 
-  const handleMovieValueChange = (value: string | null, array: IGenre[]) => {
+  const handleMovieValueChange = (
+    value: string | null,
+    array: IGenre[] | undefined,
+  ) => {
     array?.find(({ id, name }) => {
       if (value === name) {
         handleGenreChange(`${id}`);
@@ -28,27 +31,29 @@ const useSelect = () => {
     });
   };
 
-  const sortValueDate = {
-    "Most popular": "popularity.desc",
-    "Less popular": "popularity.asc",
-    "Higher rating": "vote_average.desc",
-    "Lower rating": "vote_average.asc",
-    "Late date": "primary_release_date.desc",
-    "Early date": "primary_release_date.asc",
-    "Title (A-Z)": "original_title.asc",
-    "Title (Z-A)": "original_title.desc",
-  };
+  const sortValueDateMap = new Map();
+
+  sortValueDateMap.set("Most popular", "popularity.desc");
+  sortValueDateMap.set("Less popular", "popularity.asc");
+  sortValueDateMap.set("Higher rating", "vote_average.desc");
+  sortValueDateMap.set("Lower rating", "vote_average.asc");
+  sortValueDateMap.set("Late date", "primary_release_date.desc");
+  sortValueDateMap.set("Early date", "primary_release_date.asc");
+  sortValueDateMap.set("Title (A-Z)", "original_title.asc");
+  sortValueDateMap.set("Title (Z-A)", "original_title.desc");
 
   const handleSortValueChange = (currentValue: string | null) => {
-    for (const value in sortValueDate) {
+    for (const value of sortValueDateMap.keys()) {
       if (value === currentValue) {
-        setSortValue(sortValueDate[value]);
+        setSortValue(sortValueDateMap.get(value));
       }
     }
   };
 
   return {
     moviesGenreValue,
+    setMoviesGenreValue,
+    handleGenreChange,
     rateFrom,
     rateTo,
     sortValue,

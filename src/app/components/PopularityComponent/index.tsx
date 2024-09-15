@@ -16,7 +16,7 @@ const PopularityComponent: FC<PopularityComponentProps> = ({
   if (!popularity) return null;
 
   return (
-    <Text c="dimmed" className="text-base">
+    <Text c="dimmed" className="text-base sm:text-sm">
       {`(${shortNum(+popularity.toString().replace(".", ""))})`}
     </Text>
   );

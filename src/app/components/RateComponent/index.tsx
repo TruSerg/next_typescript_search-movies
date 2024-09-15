@@ -11,8 +11,13 @@ const RateComponent: FC<RateComponentProps> = ({ rate }) => {
 
   return (
     <Box className="flex items-center gap-1">
-      <Image src="/rate.svg" width={28} height={28} alt="Rate icon" />
-      <Text className="text-base font-semibold">
+      <Image
+        src="/rate.svg"
+        width={28}
+        height={28}
+        alt="Rate icon"
+      />
+      <Text className="text-base font-semibold sm:text-sm">
         {rate % 1 === 0 ? rate : rate?.toFixed(1)}
       </Text>
     </Box>

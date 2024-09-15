@@ -10,3 +10,27 @@ export const movieFiltersList = [
   "top_rated",
   "now_playing",
 ];
+
+export const movieSortList = [
+  "Most popular",
+  "Less popular",
+  "Higher rating",
+  "Lower rating",
+  "Late date",
+  "Early date",
+  "Title (A-Z)",
+  "Title (Z-A)",
+];
+
+export const movieFromToRateList = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+];
