@@ -1,4 +1,4 @@
-import { FC, FormEvent } from "react";
+import { FC } from "react";
 import { UnstyledButton } from "@mantine/core";
 
 interface CustomButtonProps {
