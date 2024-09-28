@@ -42,7 +42,7 @@ const MoviesCard: FC<customCardProps> = ({
   return (
     <li className="flex max-w-[482px] 2xl:max-w-full">
       <Card radius="md" shadow="sm" className="w-full flex-1 sm:p-2">
-        <Box className="mb-3 grid flex-1 grid-cols-[119px_1fr] gap-4 lg:mb-2 lg:flex lg:flex-col lg:gap-2 sm:mb-2">
+        <Box className="grid flex-1 grid-cols-[119px_1fr] gap-4 lg:flex lg:flex-col lg:gap-2">
           {image ? (
             <Image
               className="lg:w-full"
@@ -55,12 +55,12 @@ const MoviesCard: FC<customCardProps> = ({
             <NoImageSmall />
           )}
 
-          <Box className="word-wrap-[break-word] flex flex-col">
+          <Box className="break-word flex flex-col">
             <Box className="flex items-start justify-between gap-4">
               <Heading
                 tag="h2"
                 text={title}
-                className="mb-2 text-xl font-semibold text-purple-500 xl:text-lg lg:text-base sm:mb-1 sm:text-sm"
+                className="mb-2 text-xl font-semibold leading-tight text-purple-500 xl:text-lg xl:leading-tight lg:text-base lg:leading-tight sm:mb-1 sm:text-sm sm:leading-tight"
               />
               <Box className="flex-shrink-0 cursor-pointer">
                 <Image
@@ -84,21 +84,25 @@ const MoviesCard: FC<customCardProps> = ({
 
               <PopularityComponent rate={rate} popularity={popularity} />
             </Box>
-          </Box>
-        </Box>
-        <Box className="mt-auto flex flex-wrap gap-x-2 lg:text-sm">
-          <Text c="dimmed" className="text-md lg:text-sm sm:text-xs">
-            Genres:
-          </Text>
 
-          {genresList?.map((genre: string) => (
-            <Text
-              key={genre}
-              className="text-md lg:text-sm sm:text-xs [&:not(:last-child)]:after:content-[',']"
-            >
-              {genre}
-            </Text>
-          ))}
+            <Box className="mt-auto flex flex-wrap gap-x-1 lg:text-sm">
+              <Text
+                c="dimmed"
+                className="text-md leading-tight lg:text-sm sm:text-xs"
+              >
+                Жанр:
+              </Text>
+
+              {genresList?.map((genre: string) => (
+                <Text
+                  key={genre}
+                  className="text-md leading-tight lg:text-sm sm:text-xs [&:not(:last-child)]:after:content-[',']"
+                >
+                  {genre}
+                </Text>
+              ))}
+            </Box>
+          </Box>
         </Box>
       </Card>
     </li>

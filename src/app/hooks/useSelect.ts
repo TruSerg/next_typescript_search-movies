@@ -1,8 +1,15 @@
 import { useState } from "react";
 
 import { IGenre } from "../interfaces/searchMoviesDataInterfaces";
+import { useAppDispatch } from "./useStoreHooks";
+import {
+  changeMovieFilterValue,
+  changeTitleMovies,
+} from "../store/searchMoviesSlice";
 
 const useSelect = () => {
+  const dispatch = useAppDispatch();
+
   const [moviesGenreValue, setMoviesGenreValue] = useState<string>("");
   const [rateFrom, setRateFrom] = useState<string | null>("");
   const [rateTo, setRateTo] = useState<string | null>("");
@@ -31,16 +38,32 @@ const useSelect = () => {
     });
   };
 
+  const filterTypeMovies = new Map();
+
+  filterTypeMovies.set("Популярные", "popular");
+  filterTypeMovies.set("Предстоящие", "upcoming");
+  filterTypeMovies.set("Самый высокий рейтинг", "top_rated");
+  filterTypeMovies.set("Сейчас в кино", "now_playing");
+
+  const handleFilterTypeOfMoviesChange = (currentValue: string) => {
+    for (const value of filterTypeMovies.keys()) {
+      if (value === currentValue) {
+        dispatch(changeMovieFilterValue(filterTypeMovies.get(value)));
+        dispatch(changeTitleMovies(currentValue));
+      }
+    }
+  };
+
   const sortValueDateMap = new Map();
 
-  sortValueDateMap.set("Most popular", "popularity.desc");
-  sortValueDateMap.set("Less popular", "popularity.asc");
-  sortValueDateMap.set("Higher rating", "vote_average.desc");
-  sortValueDateMap.set("Lower rating", "vote_average.asc");
-  sortValueDateMap.set("Late date", "primary_release_date.desc");
-  sortValueDateMap.set("Early date", "primary_release_date.asc");
-  sortValueDateMap.set("Title (A-Z)", "original_title.asc");
-  sortValueDateMap.set("Title (Z-A)", "original_title.desc");
+  sortValueDateMap.set("Самые популярные", "popularity.desc");
+  sortValueDateMap.set("Менее популярные", "popularity.asc");
+  sortValueDateMap.set("Более высокий рейтинг", "vote_average.desc");
+  sortValueDateMap.set("Менее высокий рейтинг", "vote_average.asc");
+  sortValueDateMap.set("Поздняя дата", "primary_release_date.desc");
+  sortValueDateMap.set("Ранняя дата", "primary_release_date.asc");
+  sortValueDateMap.set("Название (А-Я)", "original_title.asc");
+  sortValueDateMap.set("Название (Я-А)", "original_title.desc");
 
   const handleSortValueChange = (currentValue: string | null) => {
     for (const value of sortValueDateMap.keys()) {
@@ -51,6 +74,7 @@ const useSelect = () => {
   };
 
   return {
+    sortValueDateMap,
     moviesGenreValue,
     setMoviesGenreValue,
     handleGenreChange,
@@ -60,6 +84,7 @@ const useSelect = () => {
     handleMovieValueChange,
     handleRateFromChange,
     handleRateToChange,
+    handleFilterTypeOfMoviesChange,
     handleSortValueChange,
   };
 };

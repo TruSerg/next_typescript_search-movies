@@ -10,7 +10,7 @@ import { usePagination } from "../hooks";
 
 import BasicPagination from "../components/Pagination";
 import CustomCard from "../components/Cards/MoviesCard";
-import CustomLoader from "../components/Loader";
+import CustomLoader from "../components/Loaders/Loader";
 import Heading from "../components/Heading";
 
 const TrendingMoviesPage = () => {
@@ -31,21 +31,18 @@ const TrendingMoviesPage = () => {
 
   return (
     <main className="m-auto w-full max-w-[1010px] pb-20 pl-[15px] pr-[15px] pt-10 xl:mb-5 xl:pb-10 xl:pt-5 lg:text-[28px] sm:mb-3 sm:pb-5 sm:pt-3 sm:text-[24px]">
-      <Heading
-        text="Trending movies"
-        className="mb-10 text-[32px] font-bold xl:mb-5 lg:text-[28px] sm:mb-3 sm:text-[24px]"
-      />
-
       <Box className="relative mb-6 min-h-[60vh]">
         {isTrendingMoviesLoading ||
         isTrendingMoviesFetching ||
         isGenresLoading ? (
-          <CustomLoader
-            className="absolute left-1/2 top-1/2 mr-[-50%] translate-x-[-50%] translate-y-[-50%]"
-            size={40}
-          />
+          <CustomLoader className="absolute left-1/2 top-1/2 mr-[-50%] translate-x-[-50%] translate-y-[-50%]" />
         ) : (
           <>
+            <Heading
+              text="На пике популярности"
+              className="mb-10 text-[32px] font-bold xl:mb-5 lg:text-[24px] sm:mb-3 sm:text-[18px]"
+            />
+
             <ul className="grid grid-cols-2 gap-4 lg:grid-cols-3 md:grid-cols-2 sm:gap-2">
               {trendingMoviesList?.map(
                 ({
@@ -78,7 +75,7 @@ const TrendingMoviesPage = () => {
         <BasicPagination
           className="flex justify-end"
           currentPage={currentPage}
-          pageCount={totalPages}
+          pageCount={totalPages > 500 ? 500 : totalPages}
           handlePageChange={handlePageChange}
         />
       ) : null}

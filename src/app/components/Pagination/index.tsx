@@ -1,6 +1,8 @@
 import { FC } from "react";
 import { Pagination } from "@mantine/core";
 
+import { useResize } from "@/app/hooks";
+
 interface PaginationProps {
   className: string;
   currentPage: number;
@@ -14,13 +16,15 @@ const BasicPagination: FC<PaginationProps> = ({
   pageCount,
   handlePageChange,
 }) => {
+  const { isScreenSm, isScreenMd } = useResize();
+
   if (!pageCount) return null;
 
   return (
     <Pagination
       hideWithOnePage
       color="#9854f6"
-      size="xs"
+      size={isScreenSm ? "xs" : "sm" ? (isScreenMd ? "sm" : "md") : "md"}
       className={className}
       total={pageCount}
       value={currentPage}

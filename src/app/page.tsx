@@ -16,10 +16,11 @@ import CustomForm from "./components/CustomForm";
 import Heading from "./components/Heading";
 import CustomSelect from "./components/Selects/CustomSelect";
 import CustomCard from "./components/Cards/MoviesCard";
-import CustomLoader from "./components/Loader";
+import CustomLoader from "./components/Loaders/Loader";
 import BasicPagination from "./components/Pagination";
 import YearPickerComponent from "./components/Inputs/YearPickerInput";
 import StartSearchingComponent from "./components/StartSearchingComponent";
+import SelectLoader from "./components/Loaders/SelectLoader";
 
 const MoviesPage = () => {
   const [isFirstRequest, setIsFirstRequest] = useState(false);
@@ -36,11 +37,6 @@ const MoviesPage = () => {
   } = useSelect();
   const { currentPage, handlePageChange } = usePagination();
   const { yearPickerValue, handleYearPickerValue } = useInput();
-  console.log("yearPickerValue: ", yearPickerValue);
-  console.log("rateFrom: ", rateFrom);
-  console.log("moviesGenreValue: ", moviesGenreValue);
-  console.log("rateTo: ", rateTo);
-  console.log("sortValue: ", sortValue);
 
   const {
     data: genres,
@@ -103,30 +99,23 @@ const MoviesPage = () => {
   return (
     <main className="m-auto w-full max-w-[1010px] pb-20 pl-[15px] pr-[15px] pt-10 xl:m-0 xl:max-w-full xl:pb-10 xl:pt-5 sm:pt-3">
       <Heading
-        text={
-          // isSubmit
-          //   ? `${replaceGenreMovieValue(genres, moviesGenreValue)} movies`
-          //   :
-
-          "Movies"
-        }
-        className="mb-10 text-[32px] font-bold xl:mb-5 lg:text-[28px] sm:text-[24px] sm:mb-3"
+        text="Фильмы"
+        className="mb-10 text-[32px] font-bold xl:mb-5 lg:text-[24px] sm:mb-3 sm:text-[18px]"
       />
       <CustomForm
-        className="mb-6 sm:mb-3 grid grid-cols-[2fr_1fr] gap-4 lg:grid-cols-1 sm:gap-2"
+        className="mb-6 grid grid-cols-[2fr_1fr] gap-4 lg:grid-cols-1 sm:m-auto sm:mb-3 sm:max-w-80 sm:gap-2"
         handleSubmit={handleFormSubmit}
         id="searchMoviesForm"
       >
         <Box className="grid grid-cols-2 gap-4 md:gap-2 sm:grid-cols-1">
           <CustomSelect
-            clearable={true}
             data={genres?.map(({ name }) => name)}
-            label="Genres"
-            placeholder="Select genre"
+            label="Жанры"
+            placeholder="Выберите жанр"
             handleChange={(value) => handleMovieValueChange(value, genres)}
             rightSection={
               isGenresLoading ? (
-                <CustomLoader size={20} />
+                <SelectLoader size={20} />
               ) : (
                 <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
               )
@@ -134,8 +123,8 @@ const MoviesPage = () => {
           />
 
           <YearPickerComponent
-            label="Release year"
-            placeholder="Select release year"
+            label="Год выпуска"
+            placeholder="Выберите год выпуска"
             rightSection={
               !yearPickerValue ? (
                 <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
@@ -149,15 +138,15 @@ const MoviesPage = () => {
           <CustomSelect
             clearable={true}
             data={movieFromToRateList}
-            label="Ratings"
-            placeholder="From"
+            label="Рейтинг"
+            placeholder="От"
             handleChange={(value) => handleRateFromChange(value)}
           />
 
           <CustomSelect
             clearable={true}
-            data={movieFromToRateList}
-            placeholder="To"
+            data={movieFromToRateList.toReversed()}
+            placeholder="До"
             handleChange={(value) => handleRateToChange(value)}
           />
         </Box>
@@ -168,8 +157,8 @@ const MoviesPage = () => {
           <CustomSelect
             className="col-start-3 lg:col-start-2"
             data={movieSortList}
-            label="Sort by"
-            placeholder="Select sort value"
+            label="Сортировка"
+            placeholder="Выбор сортировки"
             handleChange={(value) => handleSortValueChange(value)}
             rightSection={
               <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
@@ -178,12 +167,9 @@ const MoviesPage = () => {
         </Box>
       )}
 
-      <Box className="relative mb-6 min-h-[60vh]">
+      <Box className="relative mb-6 flex min-h-[60vh] items-center justify-center">
         {isMoviesLoading || isMoviesFetching ? (
-          <CustomLoader
-            className="absolute left-1/2 top-1/2 mr-[-50%] translate-x-[-50%] translate-y-[-50%]"
-            size={40}
-          />
+          <CustomLoader className="absolute left-1/2 top-1/2 mr-[-50%] translate-x-[-50%] translate-y-[-50%] sm:h-1 sm:w-1" />
         ) : (
           <>
             {!moviesList ? (
@@ -218,13 +204,14 @@ const MoviesPage = () => {
           </>
         )}
       </Box>
-
-      <BasicPagination
-        className="flex justify-end"
-        currentPage={currentPage}
-        pageCount={totalPages}
-        handlePageChange={handlePageChange}
-      />
+      {totalPages ? (
+        <BasicPagination
+          className="flex justify-end"
+          currentPage={currentPage}
+          pageCount={totalPages > 500 ? 500 : totalPages}
+          handlePageChange={handlePageChange}
+        />
+      ) : null}
     </main>
   );
 };

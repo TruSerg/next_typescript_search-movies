@@ -14,7 +14,7 @@ const useReplaceGenreId = () => {
       return genresObj[genreId];
     });
 
-    setGenresList(newArr);
+    setGenresList(newArr.slice(0, 3));
   };
 
   return { genresList, replaceGenreIdToGenreString };

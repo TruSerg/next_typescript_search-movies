@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  .container {
-    @apply max-w-[1535px] sm:max-w-[639px] md:max-w-[767px] lg:max-w-[1023px] xl:max-w-[1279px];
-  }
+.mantine-Select-input:focus {
+  @apply border-purple-500;
+}
+
+.mantine-YearPickerInput-input:focus {
+  @apply border-purple-500;
+}
+
+.mantine-PickerControl-pickerControl:focus {
+  @apply bg-purple-500;
 }

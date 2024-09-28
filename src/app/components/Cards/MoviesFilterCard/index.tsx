@@ -53,9 +53,9 @@ const MoviesFilterCard: FC<MoviesFilterCardProps> = ({
       {date ? (
         <DateComponent
           c="dimmed"
-          className="text-base sm:mb-1 sm:text-sm"
+          className="text-base lg:text-sm sm:mb-1 sm:text-xs"
           date={date}
-          dateFormat={"D MMM, YYYY"}
+          dateFormat={"D MMM YYYY"}
         />
       ) : null}
     </Box>

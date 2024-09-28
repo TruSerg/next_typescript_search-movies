@@ -16,10 +16,11 @@ const DateComponent: FC<DateComponentProps> = ({
   dateFormat,
 }) => {
   if (!date) return null;
+  require("dayjs/locale/ru");
 
   return (
     <Text c={c} className={className}>
-      {dayjs(date).format(dateFormat)}
+      {dayjs(date).locale("ru").format(dateFormat)}
     </Text>
   );
 };

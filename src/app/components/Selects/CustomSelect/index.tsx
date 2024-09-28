@@ -1,6 +1,8 @@
 import { FC, ReactNode } from "react";
 import { Select } from "@mantine/core";
 
+import { useResize } from "@/app/hooks";
+
 interface SelectProps {
   clearable?: boolean;
   className?: string;
@@ -22,11 +24,13 @@ const CustomSelect: FC<SelectProps> = ({
   placeholder,
   handleChange,
 }) => {
+  const { isScreenSm, isScreenLg } = useResize();
+
   return (
     <Select
       clearable={clearable}
       className={className}
-      size="md"
+      size={isScreenSm ? "xs" : "sm" ? (isScreenLg ? "sm" : "md") : "md"}
       radius="md"
       rightSection={rightSection}
       label={label}
