@@ -29,13 +29,15 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <MantineProvider>
-            <Container>
-              <Box className="xl:flex-col flex bg-gray-100">
-                <SideBar />
+            {typeof window !== "undefined" && (
+              <Container>
+                <Box className="flex bg-gray-100 xl:flex-col">
+                  <SideBar />
 
-                {children}
-              </Box>
-            </Container>
+                  {children}
+                </Box>
+              </Container>
+            )}
           </MantineProvider>
         </Providers>
       </body>
