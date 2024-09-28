@@ -4,19 +4,11 @@ import { UnstyledButton } from "@mantine/core";
 interface CustomButtonProps {
   text: string;
   className: string;
-  handleClick?: (e: FormEvent<HTMLFormElement>) => void;
+  // handleClick?: (e: FormEvent<HTMLFormElement>) => void;
 }
 
-const UnstyleButton: FC<CustomButtonProps> = ({
-  text,
-  className,
-  handleClick,
-}) => {
-  return (
-    <UnstyledButton onClick={handleClick} className={className}>
-      {text}
-    </UnstyledButton>
-  );
+const UnstyleButton: FC<CustomButtonProps> = ({ text, className }) => {
+  return <UnstyledButton className={className}>{text}</UnstyledButton>;
 };
 
 export default UnstyleButton;
