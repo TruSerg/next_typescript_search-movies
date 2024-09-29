@@ -1,17 +1,16 @@
-import { Suspense } from "react";
 import { Box, MantineProvider } from "@mantine/core";
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
+
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
+import "./globals.scss";
 
 import { Inter } from "next/font/google";
 
 import { Providers } from "./provider";
 
 import Container from "./components/Container";
-import SideBar from "./components/SideBar";
-
-import "./globals.scss";
 
 const inter = Inter({ weight: ["400"], subsets: ["latin"] });
 
@@ -25,6 +24,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const SideBarWithNoSSR = dynamic(() => import("./components/SideBar"), {
+    ssr: false,
+  });
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -32,9 +35,7 @@ export default function RootLayout({
           <MantineProvider>
             <Container>
               <Box className="flex bg-gray-100 xl:flex-col">
-                <Suspense>
-                  <SideBar />
-                </Suspense>
+                <SideBarWithNoSSR />
 
                 {children}
               </Box>
