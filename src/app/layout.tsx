@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Box, MantineProvider } from "@mantine/core";
 import type { Metadata } from "next";
 import "@mantine/core/styles.css";
@@ -31,7 +32,9 @@ export default function RootLayout({
           <MantineProvider>
             <Container>
               <Box className="flex bg-gray-100 xl:flex-col">
-                <SideBar />
+                <Suspense>
+                  <SideBar />
+                </Suspense>
 
                 {children}
               </Box>
