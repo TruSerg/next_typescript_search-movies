@@ -9,9 +9,14 @@ import {
 } from "../const";
 
 const useResize = () => {
-  const [width, setWidth] = useState(window?.innerWidth);
+  const [width, setWidth] = useState(0);
+
+  const handleWindowResize = () => {
+    setWidth(window.innerWidth);
+  };
 
   useEffect(() => {
+    handleWindowResize();
     const handleResize = (e: UIEvent) => {
       const size = e.target as Window;
 
