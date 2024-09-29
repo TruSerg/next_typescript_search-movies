@@ -12,6 +12,9 @@ const nextConfig = {
     ],
     minimumCacheTTL: 1500000,
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 export default nextConfig;
