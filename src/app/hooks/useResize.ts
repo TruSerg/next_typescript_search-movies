@@ -9,7 +9,7 @@ import {
 } from "../const";
 
 const useResize = () => {
-  const [width, setWidth] = useState(window.innerWidth);
+  const [width, setWidth] = useState(window?.innerWidth);
 
   useEffect(() => {
     const handleResize = (e: UIEvent) => {

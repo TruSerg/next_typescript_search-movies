@@ -11,6 +11,7 @@ import { Inter } from "next/font/google";
 import { Providers } from "./provider";
 
 import Container from "./components/Container";
+import SideBar from "./components/SideBar";
 
 const inter = Inter({ weight: ["400"], subsets: ["latin"] });
 
@@ -24,10 +25,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const SideBarWithNoSSR = dynamic(() => import("./components/SideBar"), {
-    ssr: false,
-  });
-
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -35,7 +32,7 @@ export default function RootLayout({
           <MantineProvider>
             <Container>
               <Box className="flex bg-gray-100 xl:flex-col">
-                <SideBarWithNoSSR />
+                <SideBar />
 
                 {children}
               </Box>
