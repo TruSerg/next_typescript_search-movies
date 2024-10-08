@@ -1,7 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { Box, UnstyledButton } from "@mantine/core";
 
 import CustomMenu from "../Menu";

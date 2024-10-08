@@ -31,7 +31,7 @@ const TrendingMoviesPage = () => {
 
   return (
     <main className="m-auto w-full max-w-[1010px] pb-20 pl-[15px] pr-[15px] pt-10 xl:mb-5 xl:pb-10 xl:pt-5 lg:text-[28px] sm:mb-3 sm:pb-5 sm:pt-3 sm:text-[24px]">
-      <Box className="relative mb-6 min-h-[60vh]">
+      <Box className="relative mb-6 min-h-[80vh]">
         {isTrendingMoviesLoading ||
         isTrendingMoviesFetching ||
         isGenresLoading ? (
@@ -57,6 +57,7 @@ const TrendingMoviesPage = () => {
                   return (
                     <CustomCard
                       key={id}
+                      link={`/details/${id}`}
                       image={poster_path}
                       title={title}
                       rate={vote_average}

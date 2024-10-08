@@ -5,18 +5,15 @@ import { useResize } from "@/app/hooks";
 
 interface CustomLoaderProps {
   className?: string;
-  size?: number;
 }
 
-const CustomLoader: FC<CustomLoaderProps> = ({ className, size }) => {
-  const { isScreenSm, isScreenLg } = useResize();
+const CustomLoader: FC<CustomLoaderProps> = ({ className }) => {
+  const { isScreenSm } = useResize();
 
   return (
     <Loader
       className={className}
-      size={
-        isScreenSm ? "sm" : "md" ? (isScreenLg ? "md" : "lg") : "lg" ?? size
-      }
+      size={isScreenSm ? "md" : "lg"}
       color="#9854f6"
     />
   );

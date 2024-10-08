@@ -17,6 +17,7 @@ const useResize = () => {
 
   useEffect(() => {
     handleWindowResize();
+
     const handleResize = (e: UIEvent) => {
       const size = e.target as Window;
 

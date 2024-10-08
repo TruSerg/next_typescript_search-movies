@@ -167,7 +167,7 @@ const MoviesPage = () => {
         </Box>
       )}
 
-      <Box className="relative mb-6 flex min-h-[60vh] items-center justify-center">
+      <Box className="relative mb-6 flex min-h-[80vh] items-center justify-center">
         {isMoviesLoading || isMoviesFetching ? (
           <CustomLoader className="absolute left-1/2 top-1/2 mr-[-50%] translate-x-[-50%] translate-y-[-50%] sm:h-1 sm:w-1" />
         ) : (
@@ -189,6 +189,7 @@ const MoviesPage = () => {
                     return (
                       <CustomCard
                         key={id}
+                        link={`/details/${id}`}
                         image={poster_path}
                         title={title}
                         rate={vote_average}

@@ -40,7 +40,7 @@ const TrendingMoviesPage = () => {
 
   return (
     <main className="m-auto w-full max-w-[1210px] pb-20 pl-[24px] pr-[24px] pt-10 xl:pb-10 xl:pl-[15px] xl:pr-[15px] xl:pt-5 sm:pb-5 sm:pt-3">
-      <Box className="relative mb-6 min-h-[60vh]">
+      <Box className="relative mb-6 min-h-[80vh]">
         {isMoviesLoading || isMoviesFetching ? (
           <CustomLoader className="absolute left-[50%] top-1/2 mr-[-50%] translate-x-[-50%] translate-y-[-50%]" />
         ) : (
@@ -54,8 +54,10 @@ const TrendingMoviesPage = () => {
               {moviesList?.map(
                 ({ id, poster_path, title, release_date, vote_average }) => (
                   <MoviesFilterCard
+                    className="flex"
                     classNameText="font-semibold text-xl mb-2 leading-tight break-word text-purple-500 xl:leading-tight lg:leading-tight sm:leading-tight xl:text-lg  lg:text-base sm:mb-1 sm:text-sm"
                     key={id}
+                    link={`/details/${id}`}
                     image={poster_path}
                     title={title}
                     date={release_date}
