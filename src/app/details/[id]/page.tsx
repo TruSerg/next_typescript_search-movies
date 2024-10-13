@@ -14,7 +14,6 @@ import RateComponent from "@/app/components/RateComponent";
 import PopularityComponent from "@/app/components/PopularityComponent";
 import DateComponent from "@/app/components/DateComponent";
 import NoImageSmall from "@/app/components/NoImage/NoImageSmall";
-import VideoComponent from "@/app/components/VideoComponent";
 
 const getMovieDetails = async (id: string) => {
   try {
@@ -69,7 +68,7 @@ export const generateMetadata = async ({
 const MovieDetails: FC<MovieDetailsProps> = async ({ params: { id } }) => {
   const movie = await getMovieDetails(id);
   const video = await getMovieVideos(id);
-  console.log("video: ", video);
+  console.log('video: ', video);
 
   const title = movie.title;
   const image = movie.poster_path;
@@ -80,8 +79,7 @@ const MovieDetails: FC<MovieDetailsProps> = async ({ params: { id } }) => {
   const duration = movie.runtime;
   const budget = movie.budget;
   const grossWorldwide = movie.revenue;
-  const movieTrailer = video.results ? video.results[1]?.key : null;
-  console.log("movieTrailer: ", movieTrailer);
+  const movieTrailerId = video.results ? video.results[0]?.key : null;
 
   return (
     <main className="relative m-auto min-h-[80vh] w-full max-w-[1010px] pb-20 pl-[15px] pr-[15px] pt-10 xl:m-0 xl:max-w-full xl:pb-10 xl:pt-5 sm:pt-3">
@@ -102,7 +100,7 @@ const MovieDetails: FC<MovieDetailsProps> = async ({ params: { id } }) => {
           <Box className="break-word flex flex-col gap-3">
             <Box className="flex items-start justify-between gap-4">
               <Heading
-                tag="h2"
+                tag="h1"
                 text={title}
                 className="mb-2 text-xl font-semibold leading-tight text-purple-500 xl:text-lg xl:leading-tight lg:text-base lg:leading-tight sm:mb-1 sm:text-sm sm:leading-tight"
               />
@@ -211,7 +209,30 @@ const MovieDetails: FC<MovieDetailsProps> = async ({ params: { id } }) => {
       </Box>
 
       <Box className="min-h-[1189px] rounded-xl bg-white p-6">
-        <VideoComponent key={movieTrailer} />
+        {movieTrailerId && (
+          <Box className="border-b-solid border-b-#D5D6DC mb-5 border-b-[1px] pb-5">
+            <Heading
+              tag="h2"
+              text="Трейлер"
+              className="mb-5 text-xl font-semibold leading-tight text-purple-500 xl:text-lg xl:leading-tight lg:text-base lg:leading-tight sm:mb-1 sm:text-sm sm:leading-tight"
+            />
+
+            <iframe
+              width="500"
+              height="281"
+              src={`https://www.youtube.com/embed/${movieTrailerId}`}
+              allowFullScreen
+            />
+          </Box>
+        )}
+
+        <Box>
+          <Heading
+            tag="h2"
+            text="Описание"
+            className="mb-2 text-xl font-semibold leading-tight text-purple-500 xl:text-lg xl:leading-tight lg:text-base lg:leading-tight sm:mb-1 sm:text-sm sm:leading-tight"
+          />
+        </Box>
       </Box>
     </main>
   );
