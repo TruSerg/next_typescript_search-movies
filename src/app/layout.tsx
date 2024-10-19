@@ -1,6 +1,5 @@
 import { Box, MantineProvider } from "@mantine/core";
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
@@ -13,7 +12,10 @@ import { Providers } from "./provider";
 import Container from "./components/Container";
 import SideBar from "./components/SideBar";
 
-const inter = Inter({ weight: ["400"], subsets: ["latin"] });
+const inter = Inter({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",

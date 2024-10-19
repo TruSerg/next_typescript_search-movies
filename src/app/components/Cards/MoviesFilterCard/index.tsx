@@ -1,13 +1,14 @@
 import { FC } from "react";
 import Image from "next/image";
-import { Box, Card, Text } from "@mantine/core";
+import Link from "next/link";
+import { Box, Card } from "@mantine/core";
 
 import { IMAGE_URL } from "@/app/const";
 
 import DateComponent from "../../DateComponent";
 import RateComponent from "../../RateComponent";
 import NoImageBig from "../../NoImage/NoImageBig";
-import Link from "next/link";
+import Heading from "../../Heading";
 
 interface MoviesFilterCardProps {
   link: string;
@@ -24,7 +25,6 @@ interface MoviesFilterCardProps {
 const MoviesFilterCard: FC<MoviesFilterCardProps> = ({
   link,
   className,
-  classNameText,
   image,
   title,
   date,
@@ -50,9 +50,11 @@ const MoviesFilterCard: FC<MoviesFilterCardProps> = ({
           <RateComponent rate={rate} />
         </Box>
 
-        <Text fw={600} className={classNameText}>
-          {title}
-        </Text>
+        <Heading
+          tag="h2"
+          text={title}
+          className="mb-2 text-xl font-semibold leading-tight text-purple-500 xl:text-lg xl:leading-tight lg:text-base lg:leading-tight sm:mb-1 sm:text-sm sm:leading-tight"
+        />
 
         {date ? (
           <DateComponent

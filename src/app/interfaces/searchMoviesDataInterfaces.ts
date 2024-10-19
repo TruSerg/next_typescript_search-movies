@@ -40,3 +40,9 @@ export interface MoviesSearchParams {
   to?: string | null;
   moviesFilterValue?: string;
 }
+
+export interface IMovieProduction {
+  id: number;
+  logo_path: string;
+  name: string;
+}
