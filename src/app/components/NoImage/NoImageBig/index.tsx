@@ -4,7 +4,7 @@ import NoImage from "../../../static/img/no-image-big.jpg";
 
 const NoImageBig = () => (
   <Image
-    className="h-[300px] w-full"
+    className="flex w-full"
     src={NoImage}
     width={200}
     height={300}

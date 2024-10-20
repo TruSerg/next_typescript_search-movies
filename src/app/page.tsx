@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Box, rem } from "@mantine/core";
+import { Box, Button, rem } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";
 
 import { movieFromToRateList, movieSortList } from "./const";
@@ -10,7 +10,7 @@ import {
   useLazySearchMoviesQuery,
 } from "./store/movies.api";
 
-import { useInput, usePagination, useSelect } from "./hooks";
+import { useInput, usePagination, useResize, useSelect } from "./hooks";
 
 import CustomForm from "./components/CustomForm";
 import Heading from "./components/Heading";
@@ -23,6 +23,7 @@ import StartSearchingComponent from "./components/StartSearchingComponent";
 import SelectLoader from "./components/Loaders/SelectLoader";
 
 const MoviesPage = () => {
+  const { isScreenSm, isScreenLg } = useResize();
   const [isFirstRequest, setIsFirstRequest] = useState(false);
 
   const {
@@ -152,6 +153,17 @@ const MoviesPage = () => {
         </Box>
       </CustomForm>
 
+      <Box className="mb-6 flex justify-end sm:m-auto sm:mb-3 sm:max-w-80">
+        <Button
+          form="searchMoviesForm"
+          type="submit"
+          color="#9854f6"
+          className="flex justify-center items-center max-w-[200px] justify-end sm:h-8 sm:w-[70px] sm:text-sm"
+        >
+          Search
+        </Button>
+      </Box>
+
       {isFirstRequest && (
         <Box className="mb-6 grid grid-cols-3 gap-2 lg:grid-cols-2 sm:grid-cols-1">
           <CustomSelect
@@ -167,7 +179,7 @@ const MoviesPage = () => {
         </Box>
       )}
 
-      <Box className="relative mb-6 flex min-h-[80vh] items-center justify-center">
+      <Box className="relative mb-6 flex min-h-[80vh] items-start justify-center">
         {isMoviesLoading || isMoviesFetching ? (
           <CustomLoader className="absolute left-1/2 top-1/2 mr-[-50%] translate-x-[-50%] translate-y-[-50%] sm:h-1 sm:w-1" />
         ) : (

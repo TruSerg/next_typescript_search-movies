@@ -4,7 +4,7 @@ import { Box, Text } from "@mantine/core";
 import StartSearchingImage from "../../static/img/search-movies-image.png";
 
 const StartSearchingComponent = () => (
-  <Box className="">
+  <Box>
     <Image
       className="mb-5"
       src={StartSearchingImage}

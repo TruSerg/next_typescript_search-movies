@@ -1,20 +1,21 @@
 import { FC, useEffect } from "react";
-import { Box, Card, Text } from "@mantine/core";
+import Link from "next/link";
 import Image from "next/image";
+import { Box, Card, Text } from "@mantine/core";
 
 import { IGenre } from "@/app/interfaces/searchMoviesDataInterfaces";
 
 import { useGetMovieGenresQuery } from "@/app/store/movies.api";
 
 import { IMAGE_URL } from "@/app/const";
-import { useReplaceGenreId } from "@/app/hooks";
+import { useReplaceGenreId, useResize } from "@/app/hooks";
 
 import Heading from "../../Heading";
 import DateComponent from "../../DateComponent";
 import RateComponent from "../../RateComponent";
 import PopularityComponent from "../../PopularityComponent";
 import NoImageSmall from "../../NoImage/NoImageSmall";
-import Link from "next/link";
+import NoImageBig from "../../NoImage/NoImageBig";
 
 interface customCardProps {
   link: string;
@@ -37,6 +38,7 @@ const MoviesCard: FC<customCardProps> = ({
 }) => {
   const { data: genres } = useGetMovieGenresQuery();
   const { genresList, replaceGenreIdToGenreString } = useReplaceGenreId();
+  const { isScreenLg } = useResize();
 
   useEffect(() => {
     replaceGenreIdToGenreString(genres as IGenre[], list);
@@ -54,6 +56,8 @@ const MoviesCard: FC<customCardProps> = ({
               height="170"
               alt={title}
             />
+          ) : isScreenLg ? (
+            <NoImageBig />
           ) : (
             <NoImageSmall />
           )}
@@ -88,23 +92,27 @@ const MoviesCard: FC<customCardProps> = ({
               <PopularityComponent rate={rate} popularity={popularity} />
             </Box>
 
-            <Box className="mt-auto flex flex-wrap gap-x-1 lg:text-sm">
-              <Text
-                c="dimmed"
-                className="text-md leading-tight lg:text-sm sm:text-xs"
-              >
-                Жанр:
-              </Text>
+            {genresList?.length !== 0 && (
+              <>
+                <Box className="mt-auto flex flex-wrap gap-x-1 lg:text-sm">
+                  <Text
+                    c="dimmed"
+                    className="text-md leading-tight lg:text-sm sm:text-xs"
+                  >
+                    Жанр:
+                  </Text>
 
-              {genresList?.map((genre: string) => (
-                <Text
-                  key={genre}
-                  className="text-md leading-tight lg:text-sm sm:text-xs [&:not(:last-child)]:after:content-[',']"
-                >
-                  {genre}
-                </Text>
-              ))}
-            </Box>
+                  {genresList?.map((genre: string) => (
+                    <Text
+                      key={genre}
+                      className="text-md leading-tight lg:text-sm sm:text-xs [&:not(:last-child)]:after:content-[',']"
+                    >
+                      {genre}
+                    </Text>
+                  ))}
+                </Box>
+              </>
+            )}
           </Box>
         </Box>
       </Card>

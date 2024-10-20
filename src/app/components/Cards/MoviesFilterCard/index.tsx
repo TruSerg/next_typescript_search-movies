@@ -12,7 +12,6 @@ import Heading from "../../Heading";
 
 interface MoviesFilterCardProps {
   link: string;
-  className?: string;
   classNameText?: string;
   image: string;
   title: string;
@@ -24,7 +23,6 @@ interface MoviesFilterCardProps {
 
 const MoviesFilterCard: FC<MoviesFilterCardProps> = ({
   link,
-  className,
   image,
   title,
   date,
@@ -32,8 +30,8 @@ const MoviesFilterCard: FC<MoviesFilterCardProps> = ({
   width,
   height,
 }) => (
-  <Link href={link} className={className}>
-    <Card radius="md" shadow="sm" padding="none">
+  <Link href={link} className='flex'>
+    <Card className="w-full" radius="md" shadow="sm" padding="none">
       {image ? (
         <Image
           src={`${IMAGE_URL}${image}`}
@@ -53,7 +51,7 @@ const MoviesFilterCard: FC<MoviesFilterCardProps> = ({
         <Heading
           tag="h2"
           text={title}
-          className="mb-2 text-xl font-semibold leading-tight text-purple-500 xl:text-lg xl:leading-tight lg:text-base lg:leading-tight sm:mb-1 sm:text-sm sm:leading-tight"
+          className="mb-2 break-all text-xl font-semibold leading-tight text-purple-500 xl:text-lg xl:leading-tight lg:text-base lg:leading-tight sm:mb-1 sm:text-sm sm:leading-tight"
         />
 
         {date ? (
