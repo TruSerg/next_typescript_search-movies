@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Box, Button, rem } from "@mantine/core";
-import { IconChevronDown } from "@tabler/icons-react";
+import { IconChevronDown, IconSearch } from "@tabler/icons-react";
 
 import { movieFromToRateList, movieSortList } from "./const";
 
@@ -23,7 +23,6 @@ import StartSearchingComponent from "./components/StartSearchingComponent";
 import SelectLoader from "./components/Loaders/SelectLoader";
 
 const MoviesPage = () => {
-  const { isScreenSm, isScreenLg } = useResize();
   const [isFirstRequest, setIsFirstRequest] = useState(false);
 
   const {
@@ -98,7 +97,7 @@ const MoviesPage = () => {
   console.log(moviesList?.length);
 
   return (
-    <main className="m-auto w-full max-w-[1010px] pb-20 pl-[15px] pr-[15px] pt-10 xl:m-0 xl:max-w-full xl:pb-10 xl:pt-5 sm:pt-3">
+    <main className="m-[0_auto] w-full max-w-[1010px] pb-20 pl-[15px] pr-[15px] pt-10 xl:m-0 xl:max-w-full xl:pb-10 xl:pt-5 sm:pt-3">
       <Heading
         text="Фильмы"
         className="mb-10 text-[32px] font-bold xl:mb-5 lg:text-[24px] sm:mb-3 sm:text-[18px]"
@@ -116,7 +115,7 @@ const MoviesPage = () => {
             handleChange={(value) => handleMovieValueChange(value, genres)}
             rightSection={
               isGenresLoading ? (
-                <SelectLoader size={20} />
+                <SelectLoader />
               ) : (
                 <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
               )
@@ -158,9 +157,9 @@ const MoviesPage = () => {
           form="searchMoviesForm"
           type="submit"
           color="#9854f6"
-          className="flex justify-center items-center max-w-[200px] justify-end sm:h-8 sm:w-[70px] sm:text-sm"
+          className="flex w-full max-w-[100px] items-center justify-end justify-center transition delay-150 ease-in-out lg:h-8 sm:h-7 sm:max-w-[70px] sm:text-sm"
         >
-          Search
+          <IconSearch className="lg:h-5 lg:w-5 sm:h-4 sm:w-4" />
         </Button>
       </Box>
 
@@ -179,7 +178,7 @@ const MoviesPage = () => {
         </Box>
       )}
 
-      <Box className="relative mb-6 flex min-h-[80vh] items-start justify-center">
+      <Box className="relative mb-6 flex min-h-[60vh] items-start justify-center">
         {isMoviesLoading || isMoviesFetching ? (
           <CustomLoader className="absolute left-1/2 top-1/2 mr-[-50%] translate-x-[-50%] translate-y-[-50%] sm:h-1 sm:w-1" />
         ) : (

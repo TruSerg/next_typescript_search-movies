@@ -8,15 +8,7 @@ interface CustomLoaderProps {
 }
 
 const CustomLoader: FC<CustomLoaderProps> = ({ className }) => {
-  const { isScreenSm } = useResize();
-
-  return (
-    <Loader
-      className={className}
-      size={isScreenSm ? "md" : "lg"}
-      color="#9854f6"
-    />
-  );
+  return <Loader className={className} size="md" color="#9854f6" />;
 };
 
 export default CustomLoader;

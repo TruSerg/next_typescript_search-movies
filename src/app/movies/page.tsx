@@ -39,7 +39,7 @@ const TrendingMoviesPage = () => {
   const totalPages = movies?.total_pages;
 
   return (
-    <main className="m-auto w-full max-w-[1210px] pb-20 pl-[15px] pr-[15px] pt-10 xl:pb-10 xl:pt-5 sm:pb-5 sm:pt-3">
+    <main className="m-[0_auto] w-full max-w-[1210px] pb-20 pl-[15px] pr-[15px] pt-10 xl:pb-10 xl:pt-5 sm:pb-5 sm:pt-3">
       <Box className="relative mb-6 min-h-[80vh]">
         {isMoviesLoading || isMoviesFetching ? (
           <CustomLoader className="absolute left-[50%] top-1/2 mr-[-50%] translate-x-[-50%] translate-y-[-50%]" />
@@ -61,8 +61,6 @@ const TrendingMoviesPage = () => {
                     title={title}
                     date={release_date}
                     rate={vote_average}
-                    width={200}
-                    height={300}
                   />
                 ),
               )}

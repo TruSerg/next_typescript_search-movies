@@ -7,7 +7,7 @@ interface CustomSelectLoaderProps {
 }
 
 const SelectLoader: FC<CustomSelectLoaderProps> = ({ className, size }) => {
-  return <Loader className={className} size={size} color="#9854f6" />;
+  return <Loader className={className} size="20" color="#9854f6" />;
 };
 
 export default SelectLoader;

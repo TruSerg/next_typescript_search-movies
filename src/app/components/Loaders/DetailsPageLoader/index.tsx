@@ -6,7 +6,7 @@ interface DetailsPageLoaderProps {
 }
 
 const DetailsPageLoader: FC<DetailsPageLoaderProps> = ({ className }) => {
-  return <Loader className={className} color="#9854f6" />;
+  return <Loader size="md" className={className} color="#9854f6" />;
 };
 
 export default DetailsPageLoader;

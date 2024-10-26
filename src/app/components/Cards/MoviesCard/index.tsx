@@ -46,7 +46,7 @@ const MoviesCard: FC<customCardProps> = ({
 
   return (
     <Link href={link} className="flex max-w-[482px] 2xl:max-w-full">
-      <Card radius="md" shadow="sm" className="w-full flex-1 sm:p-2">
+      <Card radius="md" shadow="sm" className="relative w-full flex-1 sm:p-2">
         <Box className="grid flex-1 grid-cols-[119px_1fr] gap-4 lg:flex lg:flex-col lg:gap-2">
           {image ? (
             <Image
@@ -62,15 +62,16 @@ const MoviesCard: FC<customCardProps> = ({
             <NoImageSmall />
           )}
 
-          <Box className="break-word flex flex-col">
+          <Box className="break-word flex h-full flex-col">
             <Box className="flex items-start justify-between gap-4">
               <Heading
                 tag="h2"
                 text={title}
                 className="mb-2 text-xl font-semibold leading-tight text-purple-500 xl:text-lg xl:leading-tight lg:text-base lg:leading-tight sm:mb-1 sm:text-sm sm:leading-tight"
               />
-              <Box className="flex-shrink-0 cursor-pointer">
+              <Box className="flex-shrink-0 cursor-pointer lg:absolute lg:left-4 lg:top-4 lg:p-3 sm:left-1 sm:top-1">
                 <Image
+                  className="sm:h-5 sm:w-5"
                   src="/emptyRate.svg"
                   width="25"
                   height="25"
@@ -105,7 +106,7 @@ const MoviesCard: FC<customCardProps> = ({
                   {genresList?.map((genre: string) => (
                     <Text
                       key={genre}
-                      className="text-md leading-tight lg:text-sm sm:text-xs [&:not(:last-child)]:after:content-[',']"
+                      className="text-md leading-tight first-letter:uppercase lg:text-sm sm:text-xs [&:not(:last-child)]:after:content-[',']"
                     >
                       {genre}
                     </Text>

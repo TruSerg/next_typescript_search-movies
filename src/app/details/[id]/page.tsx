@@ -88,12 +88,12 @@ const MovieDetails: FC<MovieDetailsProps> = async ({ params: { id } }) => {
     movieTrailerId ?? movieDescription ?? movieProduction;
 
   return (
-    <main className="m-auto w-full max-w-[1010px] pb-10 pl-[15px] pr-[15px] pt-10 xl:m-0 xl:max-w-full xl:pb-5 xl:pt-5 sm:pb-3 sm:pt-3">
+    <main className="m-[0_auto] w-full max-w-[1010px] pb-10 pl-[15px] pr-[15px] pt-10 xl:m-0 xl:max-w-full xl:pb-5 xl:pt-5 sm:pb-3 sm:pt-3">
       <Box className="mb-5 min-h-[400px] rounded-xl bg-white p-6 sm:p-3">
         <Box className="grid flex-1 grid-cols-[250px_1fr] gap-4 md:flex md:flex-col">
           {image ? (
             <Image
-              className="sm:m-auto sm:w-full sm:max-w-[280px]"
+              className="sm:m-[0_auto] sm:w-full sm:max-w-[280px]"
               src={`${IMAGE_URL}${image}`}
               width="250"
               height="352"
@@ -207,11 +207,11 @@ const MovieDetails: FC<MovieDetailsProps> = async ({ params: { id } }) => {
                     Жанр
                   </Text>
 
-                  <Box className="flex flex-wrap justify-end gap-1">
+                  <Box className="flex flex-wrap gap-1">
                     {genresList?.map(({ id, name }) => (
                       <Text
                         key={id}
-                        className="text-md leading-tight lg:text-sm sm:text-xs [&:not(:last-child)]:after:content-[',']"
+                        className="text-md leading-tight first-letter:uppercase lg:text-sm sm:text-xs [&:not(:last-child)]:after:content-[',']"
                       >
                         {name}
                       </Text>

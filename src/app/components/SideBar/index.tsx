@@ -21,7 +21,7 @@ const SideBar = () => {
           href="/"
           className={
             pathname === "/"
-              ? "whitespace-nowrap rounded-lg bg-purple-200 p-[10px] text-base font-bold text-purple-500 sm:text-sm"
+              ? "whitespace-nowrap rounded-lg bg-purple-200 p-[10px] text-base font-bold text-purple-500 sm:p-2 sm:text-sm"
               : "whitespace-nowrap rounded-lg bg-transparent p-[10px] text-base text-black transition-colors hover:text-purple-500 sm:text-sm"
           }
         >
@@ -31,7 +31,7 @@ const SideBar = () => {
           <UnstyledButton
             className={
               pathname === "/movies"
-                ? "rounded-lg bg-purple-200 p-[10px] text-base font-bold text-purple-500 sm:text-sm"
+                ? "rounded-lg bg-purple-200 p-[10px] text-base font-bold text-purple-500 sm:p-2 sm:text-sm"
                 : "rounded-lg bg-transparent p-[10px] text-base text-black transition-colors hover:text-purple-500 sm:text-sm"
             }
           >
@@ -42,7 +42,7 @@ const SideBar = () => {
           href="/trending"
           className={
             pathname === "/trending"
-              ? "rounded-lg bg-purple-200 p-[10px] text-base font-bold text-purple-500 sm:text-sm"
+              ? "rounded-lg bg-purple-200 p-[10px] text-base font-bold text-purple-500 sm:p-2 sm:text-sm"
               : "rounded-lg bg-transparent p-[10px] text-base text-black transition-colors hover:text-purple-500 sm:text-sm"
           }
         >
