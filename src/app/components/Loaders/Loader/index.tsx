@@ -1,8 +1,6 @@
 import { FC } from "react";
 import { Loader } from "@mantine/core";
 
-import { useResize } from "@/app/hooks";
-
 interface CustomLoaderProps {
   className?: string;
 }

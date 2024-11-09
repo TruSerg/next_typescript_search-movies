@@ -27,13 +27,13 @@ const MoviesFilterCard: FC<MoviesFilterCardProps> = ({
   rate,
 }) => (
   <Link href={link} className="flex">
-    <Card className="w-full relative" radius="md" shadow="sm" padding="none">
+    <Card className="relative w-full" radius="md" shadow="sm" padding="none">
       {image ? (
         <Image
           className="w-full"
           src={`${IMAGE_URL}${image}`}
-          width="200"
-          height="300"
+          width="150"
+          height="250"
           alt={title}
         />
       ) : (

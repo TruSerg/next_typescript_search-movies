@@ -10,7 +10,9 @@ import {
   useLazySearchMoviesQuery,
 } from "./store/movies.api";
 
-import { useInput, usePagination, useResize, useSelect } from "./hooks";
+import { getRequestErrors } from "./utils/getRequestErrors";
+
+import { useInput, usePagination, useSelect } from "./hooks";
 
 import CustomForm from "./components/CustomForm";
 import Heading from "./components/Heading";
@@ -21,6 +23,7 @@ import BasicPagination from "./components/Pagination";
 import YearPickerComponent from "./components/Inputs/YearPickerInput";
 import StartSearchingComponent from "./components/StartSearchingComponent";
 import SelectLoader from "./components/Loaders/SelectLoader";
+import ErrorComponent from "./components/ErrorComponent";
 
 const MoviesPage = () => {
   const [isFirstRequest, setIsFirstRequest] = useState(false);
@@ -93,11 +96,12 @@ const MoviesPage = () => {
 
   const moviesList = movies?.results;
   const totalPages = movies?.total_pages;
+  const genresErrorChange = getRequestErrors(genresError);
 
   console.log(moviesList?.length);
 
   return (
-    <main className="m-[0_auto] w-full max-w-[1010px] pb-20 pl-[15px] pr-[15px] pt-10 xl:m-0 xl:max-w-full xl:pb-10 xl:pt-5 sm:pt-3">
+    <main className="m-[0_auto] w-full max-w-[1010px] pb-10 pl-[15px] pr-[15px] pt-10 xl:m-0 xl:max-w-full xl:pb-5 xl:pt-5">
       <Heading
         text="Фильмы"
         className="mb-10 text-[32px] font-bold xl:mb-5 lg:text-[24px] sm:mb-3 sm:text-[18px]"
@@ -111,10 +115,12 @@ const MoviesPage = () => {
           <CustomSelect
             data={genres?.map(({ name }) => name)}
             label="Жанры"
-            placeholder="Выберите жанр"
+            placeholder={
+              isGenresError ? `${genresErrorChange}` : "Выберите жанр"
+            }
             handleChange={(value) => handleMovieValueChange(value, genres)}
             rightSection={
-              isGenresLoading ? (
+              isGenresLoading || isGenresFetching ? (
                 <SelectLoader />
               ) : (
                 <IconChevronDown style={{ width: rem(16), height: rem(16) }} />
@@ -183,35 +189,41 @@ const MoviesPage = () => {
           <CustomLoader className="absolute left-1/2 top-1/2 mr-[-50%] translate-x-[-50%] translate-y-[-50%] sm:h-1 sm:w-1" />
         ) : (
           <>
-            {!moviesList ? (
-              <StartSearchingComponent />
+            {isMoviesError ? (
+              <ErrorComponent error={getRequestErrors(moviesError)} />
             ) : (
-              <ul className="grid grid-cols-2 gap-4 lg:grid-cols-3 md:grid-cols-2 sm:gap-2">
-                {moviesList?.map(
-                  ({
-                    id,
-                    poster_path,
-                    title,
-                    vote_average,
-                    release_date,
-                    popularity,
-                    genre_ids,
-                  }) => {
-                    return (
-                      <CustomCard
-                        key={id}
-                        link={`/details/${id}`}
-                        image={poster_path}
-                        title={title}
-                        rate={vote_average}
-                        date={release_date}
-                        popularity={popularity}
-                        list={genre_ids}
-                      />
-                    );
-                  },
+              <>
+                {!moviesList ? (
+                  <StartSearchingComponent />
+                ) : (
+                  <ul className="grid grid-cols-2 gap-4 lg:grid-cols-3 md:grid-cols-2 sm:gap-2">
+                    {moviesList?.map(
+                      ({
+                        id,
+                        poster_path,
+                        title,
+                        vote_average,
+                        release_date,
+                        popularity,
+                        genre_ids,
+                      }) => {
+                        return (
+                          <CustomCard
+                            key={id}
+                            link={`/details/${id}`}
+                            image={poster_path}
+                            title={title}
+                            rate={vote_average}
+                            date={release_date}
+                            popularity={popularity}
+                            list={genre_ids}
+                          />
+                        );
+                      },
+                    )}
+                  </ul>
                 )}
-              </ul>
+              </>
             )}
           </>
         )}

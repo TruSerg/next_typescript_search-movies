@@ -30,7 +30,10 @@ const searchMoviesSlice = createSlice({
   },
 });
 
-export const { changeMovieFilterValue, changeTitleMovies, handleGenresListChange } =
-  searchMoviesSlice.actions;
+export const {
+  changeMovieFilterValue,
+  changeTitleMovies,
+  handleGenresListChange,
+} = searchMoviesSlice.actions;
 
 export default searchMoviesSlice.reducer;

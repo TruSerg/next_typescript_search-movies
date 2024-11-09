@@ -21,7 +21,7 @@ import NoImageBig from "@/app/components/NoImage/NoImageBig";
 const getMovieDetails = async (id: string) => {
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}?language=ru`,
+      `https://api.themoviedb.org/3/movi/${id}?language=ru`,
       {
         headers: { Authorization: `Bearer ${TOKEN}` },
       },
@@ -70,6 +70,7 @@ export const generateMetadata = async ({
 
 const MovieDetails: FC<MovieDetailsProps> = async ({ params: { id } }) => {
   const movie = await getMovieDetails(id);
+  console.log("movie: ", movie);
   const video = await getMovieVideos(id);
 
   const title = movie.title;
@@ -88,12 +89,12 @@ const MovieDetails: FC<MovieDetailsProps> = async ({ params: { id } }) => {
     movieTrailerId ?? movieDescription ?? movieProduction;
 
   return (
-    <main className="m-[0_auto] w-full max-w-[1010px] pb-10 pl-[15px] pr-[15px] pt-10 xl:m-0 xl:max-w-full xl:pb-5 xl:pt-5 sm:pb-3 sm:pt-3">
+    <main className="m-[0_auto] w-full max-w-[1010px] pb-10 pl-[15px] pr-[15px] pt-10 xl:m-0 xl:max-w-full xl:pb-5 xl:pt-5 ">
       <Box className="mb-5 min-h-[400px] rounded-xl bg-white p-6 sm:p-3">
         <Box className="grid flex-1 grid-cols-[250px_1fr] gap-4 md:flex md:flex-col">
           {image ? (
             <Image
-              className="sm:m-[0_auto] sm:w-full sm:max-w-[280px]"
+              className="md:m-[0_auto] md:w-full md:max-w-[280px]"
               src={`${IMAGE_URL}${image}`}
               width="250"
               height="352"

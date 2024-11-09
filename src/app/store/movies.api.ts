@@ -33,7 +33,7 @@ export const moviesApi = createApi({
   >,
   endpoints: (builder) => ({
     getMovieGenres: builder.query<IGenre[], void>({
-      query: () => `/genre/movie/list?language=ru`,
+      query: () => `/genr/movie/list?language=ru`,
       transformResponse: (response: ServerResponse) => response?.genres,
     }),
     searchMovies: builder.query<MoviesServerResponse, MoviesSearchParams>({
