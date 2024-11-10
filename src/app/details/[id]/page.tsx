@@ -21,7 +21,7 @@ import NoImageBig from "@/app/components/NoImage/NoImageBig";
 const getMovieDetails = async (id: string) => {
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movi/${id}?language=ru`,
+      `https://api.themoviedb.org/3/movie/${id}?language=ru`,
       {
         headers: { Authorization: `Bearer ${TOKEN}` },
       },
@@ -199,7 +199,7 @@ const MovieDetails: FC<MovieDetailsProps> = async ({ params: { id } }) => {
                 </li>
               )}
 
-              {genresList.length !== 0 && (
+              {genresList?.length !== 0 && (
                 <li className="flex gap-3 sm:justify-between">
                   <Text
                     c="dimmed"

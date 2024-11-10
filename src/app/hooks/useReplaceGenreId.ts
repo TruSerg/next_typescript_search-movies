@@ -6,15 +6,17 @@ const useReplaceGenreId = () => {
   const [genresList, setGenresList] = useState<string[] | null>(null);
 
   const replaceGenreIdToGenreString = (genresArr: IGenre[], arr: number[]) => {
-    const genresObj = Object.fromEntries(
-      genresArr?.map(({ id, name }) => [id, name]),
-    );
+    if (genresArr) {
+      const genresObj = Object.fromEntries(
+        genresArr?.map(({ id, name }) => [id, name]),
+      );
 
-    const newArr = arr?.map((genreId) => {
-      return genresObj[genreId];
-    });
+      const newArr = arr?.map((genreId) => {
+        return genresObj[genreId];
+      });
 
-    setGenresList(newArr.slice(0, 3));
+      setGenresList(newArr.slice(0, 3));
+    }
   };
 
   return { genresList, replaceGenreIdToGenreString };

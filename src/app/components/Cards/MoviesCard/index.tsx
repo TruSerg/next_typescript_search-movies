@@ -38,6 +38,7 @@ const MoviesCard: FC<customCardProps> = ({
 }) => {
   const { data: genres } = useGetMovieGenresQuery();
   const { genresList, replaceGenreIdToGenreString } = useReplaceGenreId();
+
   const { isScreenLg } = useResize();
 
   useEffect(() => {
@@ -93,7 +94,7 @@ const MoviesCard: FC<customCardProps> = ({
               <PopularityComponent rate={rate} popularity={popularity} />
             </Box>
 
-            {genresList?.length !== 0 && (
+            {genresList ? (
               <>
                 <Box className="mt-auto flex flex-wrap gap-x-1 lg:text-sm">
                   <Text
@@ -113,7 +114,7 @@ const MoviesCard: FC<customCardProps> = ({
                   ))}
                 </Box>
               </>
-            )}
+            ) : null}
           </Box>
         </Box>
       </Card>

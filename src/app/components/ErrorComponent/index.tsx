@@ -22,7 +22,7 @@ const ErrorComponent: FC<ErrorComponentProps> = ({ error }) => {
   const pathname = usePathname();
 
   return (
-    <Box className="absolute left-[50%] top-1/2 mr-[-50%] translate-x-[-50%] translate-y-[-50%] text-center">
+    <Box className="flex flex-col min-h-[80vh] justify-center items-center">
       <Image src={ErrorImage} width="656" height="51" alt="Error" />
       <Box className="text-7xl md:text-6xl sm:text-5xl">
         <span className={vt323.className}>ERROR</span>

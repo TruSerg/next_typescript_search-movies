@@ -107,13 +107,17 @@ const MoviesPage = () => {
         className="mb-10 text-[32px] font-bold xl:mb-5 lg:text-[24px] sm:mb-3 sm:text-[18px]"
       />
       <CustomForm
-        className="mb-6 grid grid-cols-[2fr_1fr] gap-4 lg:grid-cols-1 sm:m-auto sm:mb-3 sm:max-w-80 sm:gap-2"
+        className="mb-6 grid grid-cols-[2fr_1fr] gap-4 lg:grid-cols-1 sm:mb-3 sm:gap-1"
         handleSubmit={handleFormSubmit}
         id="searchMoviesForm"
       >
-        <Box className="grid grid-cols-2 gap-4 md:gap-2 sm:grid-cols-1">
+        <Box className="grid grid-cols-2 gap-4 md:gap-2 sm:grid-cols-1 sm:gap-1">
           <CustomSelect
-            data={genres?.map(({ name }) => name)}
+            data={
+              isGenresError
+                ? [`${genresErrorChange}`]
+                : genres?.map(({ name }) => name)
+            }
             label="Жанры"
             placeholder={
               isGenresError ? `${genresErrorChange}` : "Выберите жанр"
@@ -158,7 +162,7 @@ const MoviesPage = () => {
         </Box>
       </CustomForm>
 
-      <Box className="mb-6 flex justify-end sm:m-auto sm:mb-3 sm:max-w-80">
+      <Box className="mb-6 flex justify-end sm:mb-3">
         <Button
           form="searchMoviesForm"
           type="submit"
